@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { DatePicker, TimePicker } from 'antd';
 import { Card, Form, Button, Row, Col, Container } from 'react-bootstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
 import moment from 'moment';
 import 'antd/dist/antd.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-// import db from '../../data/db.json';
-
+import axios from 'axios';
 export default class Log extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +19,6 @@ export default class Log extends Component {
       users: []
     };
 
-    this.sampleDB = {
-
-    };
-
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleChangeTime = this.handleChangeTime.bind(this);
     this.handleChangeSets = this.handleChangeSets.bind(this);
@@ -31,7 +26,7 @@ export default class Log extends Component {
     this.handleChangeSeconds = this.handleChangeSeconds.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
 
   componentDidMount() {
     /*
@@ -45,28 +40,28 @@ export default class Log extends Component {
                 }
             })
     */
-    fetch('http://localhost:8000/users')
+  //  fetch('http://localhost:5000/testUsersFetch')
+  // .then(res => {
+  //   if (!res.ok) {
+  //     throw Error('Could not fetch data');
+  //   }
+  //   return res.json();
+  // })
+   axios.get('http://localhost:5000/testUsersAxios')
       .then(res => {
-        if (!res.ok) {
-          throw Error('Could not fetch data');
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
+        console.log('data:\n', res.data);
         this.setState({
-          users: data.map(user => user.username),
-          username: data[0].username
+          users: res.data.map(user => user.username),
+          username: res.data[0].username
         })
       })
       .catch((e) => {
-        console.log(e);
-      })
+        console.log('error msg: ' + e);
+      });
   }
 
-  handleSubmit = (event) => {
-    alert('Submitted: ' + this.state.value);
-    event.preventDefault();
+  handleChangeUsername = (e) => {
+    this.setState({ username: e.target.value });
   }
 
   handleChangeDate = (e) => {
@@ -89,11 +84,24 @@ export default class Log extends Component {
     this.setState({ seconds: e.target.value });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const workout = { 
+      username: this.state.username,
+      date: this.state.date,
+      time: this.state.time,
+      minutes: this.state.minutes,
+      seconds: this.state.seconds,
+      sets: this.state.sets
+    }
+
+    axios.post('http://localhost:5000/')
+
+    alert('Submitted: ' + this.state.value);
+  }
 
   render() {
-    function onChange(date, dateString) {
-      console.log(date, dateString);
-    }
     return (
       <div>
         <Container>
@@ -109,6 +117,7 @@ export default class Log extends Component {
                       className="mr-sm-2"
                       id="inlineFormCustomSelect"
                       custom
+                      onChange={this.handleUsername}
                     >
                       <option>Select user...</option>
                       {
@@ -134,25 +143,25 @@ export default class Log extends Component {
               </Form.Group>
               <Form.Group>
                 <Form.Row className=" justify-content-center text-center">
-                  <DatePicker onChange={onChange} />
-                  <TimePicker onChange={onChange} defaultValue={moment('00:00:00', 'HH:mm:ss')} />
+                  <DatePicker onChange={this.handleChangeDate} />
+                  <TimePicker onChange={this.handleChangeTime} defaultValue={moment('00:00:00', 'HH:mm:ss')} />
                 </Form.Row>
               </Form.Group>
               <Form.Group>
                 <Form.Row className=" justify-content-center text-center">
                   <Col xs="3">
-                    <Form.Control type="number" min="0" placeholder="00" />
+                    <Form.Control onChange={this.handleChangeSets} type="number" min="0" placeholder="00" />
                     <Form.Label>Number of sets</Form.Label>
                   </Col>
                   <h2>x</h2>
                   <Col xs="3">
-                    <Form.Control type="number" min="0" placeholder="00" />
+                    <Form.Control onChange={this.handleChangeMinutes} type="number" min="0" placeholder="00" />
                     <Form.Label>Minutes</Form.Label>
                   </Col>
                   <h2>:</h2>
                   <Col xs="3">
-                    <Form.Control type="number" min="0" max="59" placeholder="00" />
-                    <Form.Label >Seconds</Form.Label>
+                    <Form.Control onChange={this.handleChangeSeconds} type="number" min="0" max="59" placeholder="00" />
+                    <Form.Label>Seconds</Form.Label>
                   </Col>
                 </Form.Row >
               </Form.Group>

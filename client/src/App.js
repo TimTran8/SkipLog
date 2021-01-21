@@ -4,6 +4,7 @@ import NavbarMenu from './components/NavbarMenu';
 import Home from './components/Home';
 import Log from './components/Log';
 import Profile from './components/Profile';
+import Test from './components/Test';
 // import Test from './components/Test';
 // import SlideDrawer from './components/SlideDrawer';
 // import BackDrop from './components/Backdrop';
@@ -62,7 +63,7 @@ export default class App extends React.Component {
             <Route path="/" exact component={Home}></Route>
             <Route path="/log" component={Log}></Route>
             <Route path="/profile" component={Profile}></Route>
-            {/* <Route path="/stats">{Test}</Route> */}
+            <Route path="/stats" component={Test}></Route>
             {/* <Home toggle={this.drawerToggleClickHandler}/> */}
           </div>
         </div>
