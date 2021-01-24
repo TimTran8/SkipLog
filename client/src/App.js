@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NavbarMenu from './components/NavbarMenu';
-import Home from './components/Home';
+import Workouts from './components/Workouts';
 import Log from './components/Log';
 import Profile from './components/Profile';
 import Test from './components/Test';
@@ -60,10 +60,10 @@ export default class App extends React.Component {
           {/* { backdrop } */}
           {/* <div className="content"> */}
           <div className="container">
-            <Route path="/" exact component={Home}></Route>
+            <Route path="/" exact component={Workouts}></Route>
             <Route path="/log" component={Log}></Route>
             <Route path="/profile" component={Profile}></Route>
-            <Route path="/stats" component={Test}></Route>
+            {/* <Route path="/stats" component={Test}></Route> */}
             {/* <Home toggle={this.drawerToggleClickHandler}/> */}
           </div>
         </div>

@@ -15,7 +15,7 @@ const NavbarMenu = (props) => {
           <Link to="/">Home</Link>
           <Link to="/log">Log</Link>
           <Link to="/profile">Profile</Link>
-          <Link to="/stats">Stats</Link>
+          {/* <Link to="/stats">Stats</Link> */}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

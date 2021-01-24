@@ -14,7 +14,7 @@ const Timer = () => {
     <div className="app">
       <h3>React Stopwatch {element}</h3>
       <div className='stopwatch-card'>
-        <p>{formatTime(timer)}</p>
+        <h1>{formatTime(timer)}</h1>
         <div className='buttons'>
           {
             !isActive && !isPaused ?
