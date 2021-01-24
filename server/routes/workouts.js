@@ -4,7 +4,7 @@ let User = require('../models/workout.model');
 
 router.route('/').get((req, res) => {
     Workout.find()
-        .then(workouts => res.json(workouts))
+        .then(workouts => res.status(200).json(workouts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

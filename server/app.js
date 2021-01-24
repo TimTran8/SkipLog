@@ -8,6 +8,7 @@ require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 
+// const uri = 'mongodb+srv://admin:skiplog123@skiplog.db6ma.mongodb.net/Skiplog?retryWrites=true&w=majority';
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
@@ -26,13 +27,11 @@ app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
 
-
-
-const googleURI = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 app.get('/', (req, res) => {
-  res.send(googleURI);
-  // console.log(googleURI);
+  res.send('Hello, World!')
 })
+
+// const googleURI = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 // mongoose.connection.on('open', (ref) => {
 //   console.log('Connected to mongo server.');
