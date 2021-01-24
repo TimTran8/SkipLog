@@ -5,6 +5,7 @@ import Workouts from './components/Workouts';
 import Log from './components/Log';
 import Profile from './components/Profile';
 import Test from './components/Test';
+import SignIn from './components/SignIn';
 // import Test from './components/Test';
 // import SlideDrawer from './components/SlideDrawer';
 // import BackDrop from './components/Backdrop';
@@ -60,7 +61,8 @@ export default class App extends React.Component {
           {/* { backdrop } */}
           {/* <div className="content"> */}
           <div className="container">
-            <Route path="/" exact component={Workouts}></Route>
+            <Route path="/" exact component={SignIn}></Route>
+            <Route path="/workouts" component={Workouts}></Route>
             <Route path="/log" component={Log}></Route>
             <Route path="/profile" component={Profile}></Route>
             {/* <Route path="/stats" component={Test}></Route> */}
