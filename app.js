@@ -27,11 +27,8 @@ app.listen(port, () => {
 })
 
 
-
-const googleURI = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 app.get('/', (req, res) => {
-  res.send(googleURI);
-  // console.log(googleURI);
+  res.send("Hello, world!");
 })
 
 // mongoose.connection.on('open', (ref) => {
