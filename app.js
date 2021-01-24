@@ -1,12 +1,15 @@
 const express = require('express');
 const cors = require('cors'); // Cross-Origin Resource Sharing
 const mongoose = require('mongoose'), Admin = mongoose.mongo.Admin; // TODO: remove later
-
+const path = require('path');
 const app = express()
 const port = process.env.PORT || 5000;
 require('dotenv').config();
 app.use(cors());
 app.use(express.json());
+// app.use("/", express.static("./client/src/index.js"));
+app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/public')));
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -26,10 +29,12 @@ app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
 })
 
-
 app.get('/', (req, res) => {
-  res.send("Hello, world!");
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
+// app.get('/', (req, res) => {
+//   res.send("Hello, world!");
+// })
 
 // mongoose.connection.on('open', (ref) => {
 //   console.log('Connected to mongo server.');
