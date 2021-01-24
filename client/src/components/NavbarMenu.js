@@ -12,8 +12,8 @@ const NavbarMenu = (props) => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
-          <Link to="/">Home</Link>
-          <Link to="/workouts">Workouts</Link>
+          {/* <Link to="/">Home</Link> */}
+          <Link to="/">Workouts</Link>
           <Link to="/log">Log</Link>
           <Link to="/profile">Profile</Link>
           {/* <Link to="/stats">Stats</Link> */}
