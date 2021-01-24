@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  server:
+    env_file:
+        "./server/.env"
+    build:
+      context: ./server
+      dockerfile: ./dockerfile
+    image: "skiplog-server"
+    ports:
+      - "5000:5000"
+  frontend:
+    build:
+      context: ./client
+      dockerfile: ./dockerfile
+    image: "skiplog-frontend"
+    ports:
+      - "3000:3000"
+    links:
+      - "server"
