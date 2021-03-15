@@ -15,11 +15,11 @@ const Workout = props => (
     <td>{props.workouts.sets}</td>
     <td>{props.workouts.minutes}</td>
     <td>{props.workouts.seconds}</td>
-    <Button xs="1">Edit</Button>
     {/* <td>{props.workouts.date.substring(0, 10)}</td> */}
     {/* <td>
           <Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => {props.deleteExercise(props.exercise._id)}}>delete</a>
-      </td> */}
+        </td> */}
+    <td><Button xs="1">Edit</Button></td>
   </tr>
 )
 
@@ -35,13 +35,13 @@ export default class Workouts extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    axios.get('http://localhost:5000/workouts/')
+    axios.get('http://localhost:5000/workouts/workouts', { withCredentials: true })
       .then(res => {
         console.log(res.data);
         this.setState({ workouts: res.data })
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Can't get workouts", error);
       })
   }
 

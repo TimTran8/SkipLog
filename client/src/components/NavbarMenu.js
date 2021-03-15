@@ -3,19 +3,36 @@ import Nav from 'react-bootstrap/Nav'
 // import NavDropdown from 'react-bootstrap/NavDropdown'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
+const handleLogout = (e) => {
+  console.log("Logging out");
+  axios.put('http://localhost:5000/logout', { hello: 'world' }, { withCredentials: true })
+    .then(res => {
+        console.log(res.data);
+        console.log("Redirecting");
+        // this.props.history.push('/')
+    })
+  //   .catch((err) => console.log(err));
+  // e.preventDefault()
+  // localStorage.removeItem('jwt');
+  // console.log("Log out");
+}
 
 const NavbarMenu = (props) => {
   return (
     <Navbar className="navbar" collapseOnSelect expand="sm" >
-    {/* <Navbar className="navbar" collapseOnSelect > */}
       <h1 href="/">Skip Log</h1>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
           {/* <Link to="/">Home</Link> */}
-          <Link to="/">Workouts</Link>
-          <Link to="/log">Log</Link>
-          <Link to="/profile">Profile</Link>
+          <Link to="/">Home</Link>
+          {/* <Link to="/workouts">Workouts</Link> */}
+          {/* <Link to="/log">Log</Link> */}
+          {/* <Link to="/profile">Profile</Link> */}
+          <Link to="/login">Login</Link>
+          <Link to="/login" onClick={handleLogout}>Logout</Link>
           {/* <Link to="/stats">Stats</Link> */}
         </Nav>
       </Navbar.Collapse>
