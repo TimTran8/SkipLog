@@ -35,6 +35,36 @@ app.use('/workouts', requireAuth, workoutsRouter);
 // app.use('/workouts', workoutsRouter);
 // app.use('/workouts', (req, res) => workoutsRouter);
 app.get('/', (req, res) => {
-  res.send('Hello, World!')
+  // res.send('Hello, World!')
+  let cookieVal = req.cookies.username;
+  let show;
+  
+  if (cookieVal) {
+      show = `Hi ${cookieVal} <br><a href="/delete-cookie">Delete Cookie</a>`;
+  } else {
+      show = `<a href="/set-cookie">Set Cookie</a><br>
+      <a href="/delete-cookie">Delete Cookie</a><br>`;
+  }
+
+  res.send(show);
 })
 // backend routes redirect, fix front-end redirects
+
+// SET COOKIE
+app.get('/set-cookie', (req, res) => {
+  res.cookie('username', 'Webtutorials.ME', {
+      maxAge: 1000 * 60, // 1 min
+      httpOnly: true // http only, prevents JavaScript cookie access
+  });
+  // REDIRECT OT HOME
+  res.redirect('/');
+});
+
+// DELETE COOKIE
+app.get('/delete-cookie', (req, res) => {
+  //DELETING username COOKIE
+  res.clearCookie('username');
+  // REDIRECT OT HOME
+  res.redirect('/');
+
+});

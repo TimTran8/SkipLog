@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Card, Form, Button, Row, Col, Container } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from 'axios';
+// import axios from 'axios';
+import AuthenticationService from "./AuthenticationService";
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -52,25 +54,37 @@ class Login extends Component {
     // const passwordError = '';
 
     console.log('heres user:', user);
-    await axios.post('http://localhost:5000/login', user, { withCredentials: true })
-      .then(res => {
-        console.log(res.data);
-        console.log("Redirecting");
-        console.log("Cookie:", res.cookie);
+    AuthenticationService.signin(this.state.username, this.state.password)
+      .then(() => {
+        console.log("Logging in and redirecting");
         this.props.setAuth(true);
-        // this.props.getAuth();
-        console.log(res.data);
-        if (res.data) {
-          localStorage.setItem("token", "Bearer " + res.data.token);
-        }
-        // window.location = "/workouts";
-        // this.props.history.push('/workouts')
+        window.location = "/workouts";
+        // this.props.history.push('/');
       })
-      // redirect to home
-      .catch(e => {
-        console.log(e); 
-        // add errors to the DOM
-      });
+      .catch(err => {
+        console.log(err);
+      })
+    // old way
+    // await axios.post('http://localhost:5000/login', user, { withCredentials: true })
+    //   .then(res => {
+    //     console.log(res.data);
+    //     console.log("Redirecting");
+    //     console.log("Cookie:", res.cookie);
+    //     this.props.setAuth(true);
+    //     // this.props.getAuth();
+    //     console.log(res.data);
+    //     if (res.data) {
+    //       localStorage.setItem("token", "Bearer " + res.data.token);
+    //       localStorage.setItem("user", JSON.stringify(res.data));
+    //     }
+    //     window.location = "/workouts";
+    //     // this.props.history.push('/workouts')
+    //   })
+    //   // redirect to home
+    //   .catch(e => {
+    //     console.log(e); 
+    //     // add errors to the DOM
+    //   });
   }
 
   render() {
@@ -105,4 +119,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter( Login);

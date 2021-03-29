@@ -3,8 +3,8 @@ import './componentStyles/Home.css'
 import { Table, Button, Container, Card } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
+import AuthenticationService from './AuthenticationService';
 // import { Link } from 'react-router-dom';
-// import Timer from './Timer';
 
 const Workout = props => (
 
@@ -30,11 +30,18 @@ export default class Workouts extends Component {
 
     this.deleteWorkout = this.deleteWorkout.bind(this);
 
-    this.state = { workouts: [] };
+    this.state = { 
+      user: undefined,
+      workouts: []
+     };
   }
 
   componentDidMount() {
     console.log(this.props);
+    const user = AuthenticationService.getCurrentUser();
+
+    this.setState({ user: user });
+
     axios.get('http://localhost:5000/workouts/workouts', { withCredentials: true })
       .then(res => {
         console.log(res.data);
@@ -62,6 +69,14 @@ export default class Workouts extends Component {
   }
 
   render() {
+    const user = this.state.user;
+
+    // login
+    if (user && user.accessToken) {
+
+    }
+
+
     return (
       <div className="home">
         <Container>

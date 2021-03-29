@@ -72,7 +72,13 @@ module.exports.login_post = async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     // res.cookie('newToken', token, { httpOnly: true, maxAge: 10000 });
     // console.log("Created cookie:", res.cookie.jwt);
-    res.status(200).json({ user: user._id, token: token });
+    // res.status(200).json({ user: user._id, token: token });
+    res.status(200).send({
+      accessToken: token,
+      token: token,
+      username: username,
+      userId: user._id 
+    });
   }
   catch (err) {
     console.log('failed to login controller');
@@ -98,11 +104,13 @@ module.exports.logout_get = (req, res) => {
   console.log('Removing token');
   // console.log('req', req.cookie);
   // console.log('res', res.cookie);
-  res.cookie('jwt', '', { maxAge: 1 });
+  // res.cookie('jwt', '', { maxAge: 1 });
+  res.clearCookie('jwt');
   // res.cookie('jwt', 'none', {expiresIn: new Date(Date.now() + 5*1000), httpOnly: true})
   // res.cookie('jwt', '', { expiresIn: new Date(0) });
   // res.sendStatus(200);
   res.status(200).json({ success: true, message: 'Logout success'})
+  // res.redirect('http://localhost:3000');
 }
 
 module.exports.auth_get = (req, res, next) => {
@@ -116,5 +124,23 @@ module.exports.auth_get = (req, res, next) => {
   //   res.send(false);
   // }
   // console.log(res);
+  res.sendStatus(200);
+}
+
+// module.exports.testAuth_post = (req, res) => {
+module.exports.testAuth_get = (req, res) => {
+  res.cookie('new', 'blah123get', { 
+    maxAge: 1000,
+    httpOnly: true
+  });
+
+  console.log("Created new cookie");
+  res.sendStatus(200);
+}
+
+module.exports.testAuth_remove = (req, res) => {
+  // res.cookie('new', 'serasdfasdf', {maxAge: 10000});
+  res.clearCookie('new');
+  // console.log("Removed new cookie");
   res.sendStatus(200);
 }
