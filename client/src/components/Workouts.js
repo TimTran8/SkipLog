@@ -31,7 +31,8 @@ export default class Workouts extends Component {
     this.deleteWorkout = this.deleteWorkout.bind(this);
 
     this.state = { 
-      user: undefined,
+      userId: undefined,
+      token: undefined,
       workouts: []
      };
   }
@@ -39,10 +40,15 @@ export default class Workouts extends Component {
   componentDidMount() {
     console.log(this.props);
     const user = AuthenticationService.getCurrentUser();
+    if (user) {
+      this.setState({ 
+        userId: user.userId,
+        token: user.token
+      });
+    }
 
-    this.setState({ user: user });
-
-    axios.get('http://localhost:5000/workouts/workouts', { withCredentials: true })
+    // axios.get('http://localhost:5000/workouts/getWorkouts', { withCredentials: true })
+    axios.get(`http://localhost:5000/workouts/getWorkouts/${this.state.userId}`, { withCredentials: true })
       .then(res => {
         console.log(res.data);
         this.setState({ workouts: res.data })

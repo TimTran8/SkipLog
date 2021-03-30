@@ -114,7 +114,6 @@ module.exports.logout_get = (req, res) => {
 }
 
 module.exports.auth_get = (req, res, next) => {
-  // auth.requireAuth(req, res,)
   // console.log('req', req);
   // console.log('res', res);
 

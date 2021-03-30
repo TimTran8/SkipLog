@@ -5,11 +5,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import moment from 'moment';
 import 'antd/dist/antd.css';
 import axios from 'axios';
+import AuthenticationService from './AuthenticationService';
 export default class Log extends Component {
   constructor(props) {
     super(props);
 
-    this.initialState = {
+    this.state= {
       username: '',
       date: '',
       time: '',
@@ -19,7 +20,7 @@ export default class Log extends Component {
       users: []
     };
 
-    this.state = this.initialState;
+    // this.state = this.initialState;
 
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -30,27 +31,61 @@ export default class Log extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  resetFields = () => {
+    this.setState({
+      userId: undefined,
+      token: undefined,
+      username: '',
+      date: '',
+      time: '',
+      sets: '0',
+      minutes: '0',
+      seconds: '0',
+      users: []
+    })
+  }
 
   componentDidMount() {
     //  axios.get('http://localhost:5000/testUsersAxios')
     this.fetchUsers();
+    const user = AuthenticationService.getCurrentUser();
+
+    if (user) {
+      this.setState({ 
+        userId: user.userId,
+        token: user.token
+      });
+    }
     // this.setState({ time: moment('00:00:00', 'HH:mm:ss')})
     // this.setState({ time: moment()})
     // this.setState({ date: moment()})
   }
 
   fetchUsers = (e) => {
-    axios.get('http://localhost:5000/users/getUsers')
+    console.log("Fetching users");
+    // axios.get(`http://localhost:5000/users/getUsers/${this.state.userId}`, { withCredentials: true })
+    axios.get(`http://localhost:5000/users/getUsers/`, { withCredentials: true })
       .then(res => {
-        // console.log('data:\n', res.data);
+        console.log("res data", res.data);
         this.setState({
           users: res.data.map(user => user.username),
           username: res.data[0].username
         })
       })
-      .catch((e) => {
+      .catch((error) => {
         console.log('error msg: ' + e);
-      });
+      })
+    // axios.get('http://localhost:5000/users/getUsers', { withcredentials: true })
+    //   .then(res => {
+    //     // console.log('data:\n', res.data);
+    //     this.setState({
+    //       users: res.data.map(user => user.username),
+    //       username: res.data[0].username
+    //     })
+    //   })
+    //   .catch((e) => {
+    //     console.log('error msg: ' + e);
+    //   });
   }
 
   handleChangeUsername = (e) => {
@@ -83,7 +118,8 @@ export default class Log extends Component {
 
   resetForm = (e) => {
     console.log(this.state);
-    this.setState(() => this.initialState);
+    // this.setState(() => this.initialState);
+    this.resetFields();
     this.fetchUsers();
   }
 
@@ -112,7 +148,7 @@ export default class Log extends Component {
       return;
     }
 
-    axios.post('http://localhost:5000/workouts/add', workout)
+    axios.post('http://localhost:5000/workouts/add', workout, { withcredentials: true })
       .then(res => console.log(res.data))
       .catch(e => console.log(e));
 

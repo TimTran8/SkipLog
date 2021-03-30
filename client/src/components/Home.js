@@ -12,6 +12,7 @@ export default class Home extends Component {
       <div className="home">
         {/* <NavbarMenu></NavbarMenu> */}
         <h1>Home</h1>
+        <h2>Welcome to Skiplog</h2>
       </div>
     )
 
