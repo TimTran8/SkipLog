@@ -4,11 +4,16 @@ let User = require('../models/workout.model');
 
 router.route('/getWorkouts/:id').get((req, res) => {
 // router.route('/getWorkouts/').get((req, res) => {
-  console.log("", req.params);
-  Workout.findById(req.params.id)
+  console.log("params", req.params);
+  // Workout.findById(req.params.id)
+  Workout.find({ username: req.params.id })
     .then(workouts => {
-      if (!workouts) { return res.status(404).end() };
-      return res.status(200).json(user);
+      if (!workouts) { 
+        console.log("No workouts found");
+        return res.status(404).end()
+      };
+      console.log("Found workouts");
+      return res.status(200).json(workouts);
     })
     .catch(err => res.status(400).json('Error: ' + err));
     // Workout.find()

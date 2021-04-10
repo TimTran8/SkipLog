@@ -6,15 +6,17 @@ const requireAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, 'skiplog secret', (err, decodedToken) => {
       if (err) {
-        console.log('error verifying', err.message);
-        res.redirect('http://localhost:3000/login')
+        console.log('error verifying, redirecting', err.message);
+        // res.redirect('http://localhost:3000/login')
+        
       } else {
         console.log(decodedToken);
         next();
       }
     })
   } else {
-    res.redirect('http://localhost:3000/login');
+    console.log("No token, redirecting");
+    // res.redirect('http://localhost:3000/login');
   }
 }
 

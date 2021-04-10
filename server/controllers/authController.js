@@ -33,11 +33,14 @@ const handleErrors = (err) => {
 
 
 module.exports.signup_get = (req, res) => {
-  res.render('signup');
+  console.log("signup_get");
+  // res.render('signup');
 }
 
 module.exports.login_get = (req, res) => {
-  res.render('login');
+  // res.render('login');
+
+  console.log("login_get");
 }
 
 const maxAge = 3 * 24 * 60 * 60;

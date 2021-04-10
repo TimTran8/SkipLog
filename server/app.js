@@ -31,7 +31,8 @@ app.use(authRoutes);
 // app.get('*', checkUser);
 app.use('/login', requireAuth, authRoutes);
 app.use('/users', requireAuth, usersRouter);
-app.use('/workouts', requireAuth, workoutsRouter);
+// app.use('/workouts', requireAuth, workoutsRouter);
+app.use('/workouts', workoutsRouter);
 // app.use('/workouts', workoutsRouter);
 // app.use('/workouts', (req, res) => workoutsRouter);
 app.get('/', (req, res) => {
